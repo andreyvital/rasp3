@@ -1,1 +1,2 @@
 ListenPort = 2015
+Discover = "/media"
