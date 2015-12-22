@@ -1,2 +1,5 @@
 ListenPort = 2015
-Discover = "/media"
+Discover = [
+  "/media",
+  "/run/media"
+]
