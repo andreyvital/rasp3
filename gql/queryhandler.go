@@ -24,6 +24,12 @@ func QueryHandler(l mp3.Library) http.HandlerFunc {
 						"query": &graphql.ArgumentConfig{
 							Type: graphql.String,
 						},
+						"album": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"artist": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
 					},
 					Type:    graphql.NewList(MP3),
 					Resolve: MP3Resolver(l),
