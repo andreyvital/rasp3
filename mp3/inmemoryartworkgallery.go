@@ -22,9 +22,9 @@ func (g *InMemoryArtworkGallery) ArtworkFor(mp3 Mp3) *Artwork {
 	g.Lock()
 	defer g.Unlock()
 
-	if g.attempts[mp3.ID] == false {
-		return nil
-	}
+	// if g.attempts[mp3.ID] == false {
+	// 	return nil
+	// }
 
 	if g.gallery[mp3.ID] != nil {
 		return g.gallery[mp3.ID]

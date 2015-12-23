@@ -1,0 +1,18 @@
+{
+  mp3(limit: 15) {
+    id
+    file
+    id3 {
+      title
+      artist
+      album
+      year
+      track
+    }
+    artwork {
+      url
+      width
+      height
+    }
+  }
+}

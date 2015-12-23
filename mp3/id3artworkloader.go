@@ -28,19 +28,21 @@ func Id3ArtworkLoader(mp3 Mp3) *Artwork {
 
 	var width, height int
 
-	if image.MIMEType() == "image/jpeg" || image.MIMEType() == "image/jpg" {
+	mime := image.MIMEType()
+
+	if mime == "image/jpeg" || mime == "image/jpg" {
 		cfg, err := jpeg.DecodeConfig(bytes)
 
-		if err != nil {
+		if err == nil {
 			width = cfg.Width
 			height = cfg.Height
 		}
 	}
 
-	if image.MIMEType() == "image/png" {
+	if mime == "image/png" {
 		cfg, err := png.DecodeConfig(bytes)
 
-		if err != nil {
+		if err == nil {
 			width = cfg.Width
 			height = cfg.Height
 		}
@@ -48,7 +50,7 @@ func Id3ArtworkLoader(mp3 Mp3) *Artwork {
 
 	return &Artwork{
 		Binary: image.Data(),
-		MIME:   image.MIMEType(),
+		MIME:   mime,
 		Width:  width,
 		Height: height,
 	}
