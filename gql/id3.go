@@ -6,13 +6,13 @@ var ID3 = graphql.NewObject(graphql.ObjectConfig{
 	Name: "ID3",
 	Fields: graphql.Fields{
 		"title": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.String),
+			Type: graphql.String,
 		},
 		"artist": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.String),
+			Type: graphql.String,
 		},
 		"album": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.String),
+			Type: graphql.String,
 		},
 		"year": &graphql.Field{
 			Type: graphql.Int,

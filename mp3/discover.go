@@ -20,8 +20,6 @@ func Discover(l Library, root string) {
 			continue
 		}
 
-		defer f.Close()
-
 		fi, err := f.Stat()
 
 		if err != nil {
@@ -31,6 +29,8 @@ func Discover(l Library, root string) {
 
 		size := int(fi.Size())
 
-		l.Add(NewWithoutID3(file, size))
+		l.Add(New(file, size, ID3v1(f)))
+
+		f.Close()
 	}
 }
