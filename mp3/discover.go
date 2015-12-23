@@ -26,24 +26,12 @@ func Discover(l Library, root string) {
 			continue
 		}
 
-		year, err := strconv.Atoi(f.Year())
-
-		if err != nil {
-			l.Add(NewWithoutId3(file))
-			continue
-		}
-
-		frame := f.Frame(TrackFrame)
+		year, _ := strconv.Atoi(f.Year())
 
 		var track int
 
-		if frame != nil {
-			track, err = strconv.Atoi(frame.(*v2.TextFrame).Text())
-
-			if err != nil {
-				l.Add(NewWithoutId3(file))
-				continue
-			}
+		if frame := f.Frame(TrackFrame); frame != nil {
+			track, _ = strconv.Atoi(frame.(*v2.TextFrame).Text())
 		}
 
 		l.Add(
@@ -52,7 +40,6 @@ func Discover(l Library, root string) {
 				Artist: f.Artist(),
 				Album:  f.Album(),
 				Year:   year,
-				Genre:  f.Genre(),
 				Track:  track,
 			}),
 		)
