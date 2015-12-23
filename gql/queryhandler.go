@@ -6,7 +6,10 @@ import (
 	"log"
 	"net/http"
 
+	"gopkg.in/vmihailenco/msgpack.v2"
+
 	"github.com/CentaurWarchief/rasp3/mp3"
+	"github.com/golang/gddo/httputil"
 
 	"github.com/graphql-go/graphql"
 )
@@ -37,6 +40,11 @@ func QueryHandler(l mp3.Library) http.HandlerFunc {
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Content-Type") != "application/graphql" {
+			w.WriteHeader(http.StatusUnsupportedMediaType)
+			return
+		}
+
 		query, err := ioutil.ReadAll(r.Body)
 
 		if err != nil {
@@ -60,7 +68,21 @@ func QueryHandler(l mp3.Library) http.HandlerFunc {
 			return
 		}
 
-		w.Header().Set("Content-Type", "application/json")
+		prefer := httputil.NegotiateContentType(
+			r,
+			[]string{"application/json", "application/msgpack"},
+			"application/json",
+		)
+
+		w.Header().Set("Content-Type", prefer)
+
+		if prefer == "application/msgpack" {
+			if err := msgpack.NewEncoder(w).Encode(res.Data); err != nil {
+				log.Println(err)
+			}
+
+			return
+		}
 
 		if err := json.NewEncoder(w).Encode(res.Data); err != nil {
 			log.Println(err)
