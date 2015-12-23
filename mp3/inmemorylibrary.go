@@ -1,6 +1,9 @@
 package mp3
 
-import "sync"
+import (
+	"strings"
+	"sync"
+)
 
 func NewInMemoryLibrary() *InMemoryLibrary {
 	return &InMemoryLibrary{
@@ -27,7 +30,31 @@ func (l *InMemoryLibrary) GetById(id string) *Mp3 {
 }
 
 func (l *InMemoryLibrary) Search(query string) []*Mp3 {
-	return nil
+	res := make([]*Mp3, 0)
+
+	for _, mp3 := range l.collection {
+		if mp3.ID == query {
+			res = append(res, mp3)
+		}
+
+		if mp3.Id3 == nil {
+			continue
+		}
+
+		if strings.Contains(mp3.Id3.Title, query) {
+			res = append(res, mp3)
+		}
+
+		if strings.Contains(mp3.Id3.Artist, query) {
+			res = append(res, mp3)
+		}
+
+		if strings.Contains(mp3.Id3.Album, query) {
+			res = append(res, mp3)
+		}
+	}
+
+	return res
 }
 
 func (l *InMemoryLibrary) All() []*Mp3 {

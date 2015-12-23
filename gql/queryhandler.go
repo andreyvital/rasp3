@@ -12,10 +12,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func QueryHandler(
-	l mp3.Library,
-	g mp3.ArtworkGallery,
-) http.HandlerFunc {
+func QueryHandler(l mp3.Library, g mp3.ArtworkGallery) http.HandlerFunc {
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Root",
@@ -24,6 +21,9 @@ func QueryHandler(
 					Args: graphql.FieldConfigArgument{
 						"limit": &graphql.ArgumentConfig{
 							Type: graphql.Int,
+						},
+						"query": &graphql.ArgumentConfig{
+							Type: graphql.String,
 						},
 					},
 					Type: graphql.NewList(Mp3(GalleryArtworkResolver(g))),
@@ -38,7 +38,13 @@ func QueryHandler(
 							limit = 10
 						}
 
-						return From(l.All()).Take(limit).Results()
+						if p.Args["query"] == nil {
+							return From(l.All()).Take(limit).Results()
+						}
+
+						return From(l.Search(p.Args["query"].(string))).
+							Take(limit).
+							Results()
 					},
 				},
 			},

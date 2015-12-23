@@ -2,6 +2,7 @@ package mp3
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/mikkyang/id3-go"
 	"github.com/mikkyang/id3-go/v2"
@@ -36,12 +37,18 @@ func Discover(l Library, root string) {
 
 		l.Add(
 			New(file, &ID3{
-				Title:  f.Title(),
-				Artist: f.Artist(),
-				Album:  f.Album(),
+				Title:  trim(f.Title()),
+				Artist: trim(f.Artist()),
+				Album:  trim(f.Album()),
 				Year:   year,
 				Track:  track,
 			}),
 		)
 	}
+}
+
+func trim(s string) string {
+	return strings.TrimSpace(
+		strings.Replace(s, "\u0000", "", -1),
+	)
 }
