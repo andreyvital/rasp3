@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func byteString(b []byte) string {
@@ -15,7 +16,7 @@ func byteString(b []byte) string {
 		p = len(b)
 	}
 
-	return string(b[0:p])
+	return strings.TrimSpace(string(b[0:p]))
 }
 
 // http://en.wikipedia.org/wiki/ID3#Layout
