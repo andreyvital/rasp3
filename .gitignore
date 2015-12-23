@@ -1,1 +1,4 @@
 rasp3
+web/dist
+web/node_modules
+npm-debug.log
