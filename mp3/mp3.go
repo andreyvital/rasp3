@@ -3,8 +3,8 @@ package mp3
 import "github.com/twinj/uuid"
 
 type Mp3 struct {
-	ID   string
-	File string
+	ID   string `json:"id"`
+	File string `json:"file"`
 	Id3  *ID3
 }
 
