@@ -1,5 +1,6 @@
 ListenPort = 2015
 Discover = [
   "/media",
-  "/run/media"
+  "/run/media",
+  "/home/CentaurWarchief"
 ]
