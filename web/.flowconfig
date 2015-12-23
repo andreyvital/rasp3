@@ -1,0 +1,11 @@
+[ignore]
+.*/node_modules/babel
+.*/node_modules/postcss
+.*/node_modules/webpack
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='^.*\.\(css\|svg\)$' -> '<PROJECT_ROOT>/src/empty'
