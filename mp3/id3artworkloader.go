@@ -9,7 +9,7 @@ import (
 	"github.com/mikkyang/id3-go/v2"
 )
 
-func Id3ArtworkLoader(mp3 Mp3) *Artwork {
+func Id3ArtworkLoader(mp3 *Mp3) *Artwork {
 	f, err := id3.Open(mp3.File)
 
 	if err != nil {

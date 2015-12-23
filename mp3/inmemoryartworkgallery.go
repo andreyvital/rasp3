@@ -18,7 +18,7 @@ type InMemoryArtworkGallery struct {
 	*sync.Mutex
 }
 
-func (g *InMemoryArtworkGallery) ArtworkFor(mp3 Mp3) *Artwork {
+func (g *InMemoryArtworkGallery) ArtworkFor(mp3 *Mp3) *Artwork {
 	g.Lock()
 	defer g.Unlock()
 

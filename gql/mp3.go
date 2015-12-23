@@ -30,7 +30,7 @@ func Mp3(ar ArtworkReferenceResolver) *graphql.Object {
 			"artwork": &graphql.Field{
 				Type: Artwork,
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-					ref := ar(*p.Source.(*mp3.Mp3))
+					ref := ar(p.Source.(*mp3.Mp3))
 
 					if ref != nil {
 						ref.URL = fmt.Sprintf(
