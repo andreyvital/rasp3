@@ -7,12 +7,11 @@ import (
 	"net/http"
 
 	"github.com/CentaurWarchief/rasp3/mp3"
-	. "github.com/ahmetalpbalkan/go-linq"
-	"github.com/chnlr/baseurl"
+
 	"github.com/graphql-go/graphql"
 )
 
-func QueryHandler(l mp3.Library, g mp3.ArtworkGallery) http.HandlerFunc {
+func QueryHandler(l mp3.Library) http.HandlerFunc {
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Root",
@@ -26,33 +25,14 @@ func QueryHandler(l mp3.Library, g mp3.ArtworkGallery) http.HandlerFunc {
 							Type: graphql.String,
 						},
 					},
-					Type: graphql.NewList(Mp3(GalleryArtworkResolver(g))),
-					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-						limit := 10
-
-						if p.Args["limit"] != nil {
-							limit = p.Args["limit"].(int)
-						}
-
-						if limit == 0 || limit > 30 {
-							limit = 10
-						}
-
-						if p.Args["query"] == nil {
-							return From(l.All()).Take(limit).Results()
-						}
-
-						return From(l.Search(p.Args["query"].(string))).
-							Take(limit).
-							Results()
-					},
+					Type:    graphql.NewList(MP3),
+					Resolve: LibraryMP3Resolver(l),
 				},
 			},
 		}),
 	})
 
 	if err != nil {
-		log.Println(err)
 		panic(err)
 	}
 
@@ -64,12 +44,11 @@ func QueryHandler(l mp3.Library, g mp3.ArtworkGallery) http.HandlerFunc {
 			return
 		}
 
-		r.Body.Close()
+		defer r.Body.Close()
 
 		res := graphql.Do(graphql.Params{
 			Schema:        schema,
 			RequestString: string(query),
-			RootObject:    map[string]interface{}{"baseURL": baseurl.BaseUrl(r)},
 		})
 
 		if res.HasErrors() {

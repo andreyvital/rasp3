@@ -1,9 +1,8 @@
 package mp3
 
 type Library interface {
-	Add(mp3 *Mp3) error
-	All() []*Mp3
-	GetById(id string) *Mp3
-	Search(query string) []*Mp3
+	Add(mp3 MP3) error
+	All() []MP3
+	Search(query string) []MP3
 	Count() int
 }

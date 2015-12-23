@@ -1,6 +1,5 @@
 {
   mp3(limit: 15) {
-    id
     file
     size
     id3 {
@@ -9,11 +8,6 @@
       album
       year
       track
-    }
-    artwork {
-      url
-      width
-      height
     }
   }
 }
