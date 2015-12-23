@@ -6,7 +6,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func LibraryMP3Resolver(l mp3.Library) graphql.FieldResolveFn {
+func MP3Resolver(l mp3.Library) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		limit := 10
 

@@ -26,13 +26,18 @@ func QueryHandler(l mp3.Library) http.HandlerFunc {
 						},
 					},
 					Type:    graphql.NewList(MP3),
-					Resolve: LibraryMP3Resolver(l),
+					Resolve: MP3Resolver(l),
+				},
+				"artists": &graphql.Field{
+					Type:    graphql.NewList(Artist),
+					Resolve: ArtistResolver(l),
 				},
 			},
 		}),
 	})
 
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 
