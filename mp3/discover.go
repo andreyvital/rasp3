@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/CentaurWarchief/rasp3/fs"
 	"github.com/mikkyang/id3-go"
 	"github.com/mikkyang/id3-go/v2"
-	"mbios.io/mbsound/fs"
 )
 
 func Discover(l Library, root string) {
