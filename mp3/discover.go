@@ -29,7 +29,7 @@ func Discover(l Library, root string) {
 
 		size := int(fi.Size())
 
-		l.Add(New(file, size, ID3v1(f)))
+		l.Add(New(file, size, ID3v2(f)))
 
 		f.Close()
 	}
