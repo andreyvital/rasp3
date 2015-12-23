@@ -1,0 +1,36 @@
+{
+  mp3(limit: 15) {
+    file
+    size
+    id3 {
+      title
+      artist
+      album
+      year
+      track
+    }
+  }
+}
+
+{
+  artists {
+    name
+    count
+    albums {
+      name
+      count
+    }
+  }
+}
+
+{
+  mp3(artist: "Pink Floyd", album: "The Division Bell") {
+    file
+    size
+    id3 {
+      title
+      year
+      track
+    }
+  }
+}
