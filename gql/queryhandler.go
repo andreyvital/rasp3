@@ -6,10 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"gopkg.in/vmihailenco/msgpack.v2"
-
 	"github.com/CentaurWarchief/rasp3/mp3"
-	"github.com/golang/gddo/httputil"
 
 	"github.com/graphql-go/graphql"
 )
@@ -68,21 +65,7 @@ func QueryHandler(l mp3.Library) http.HandlerFunc {
 			return
 		}
 
-		prefer := httputil.NegotiateContentType(
-			r,
-			[]string{"application/json", "application/msgpack"},
-			"application/json",
-		)
-
-		w.Header().Set("Content-Type", prefer)
-
-		if prefer == "application/msgpack" {
-			if err := msgpack.NewEncoder(w).Encode(res.Data); err != nil {
-				log.Println(err)
-			}
-
-			return
-		}
+		w.Header().Set("Content-Type", "application/json")
 
 		if err := json.NewEncoder(w).Encode(res.Data); err != nil {
 			log.Println(err)

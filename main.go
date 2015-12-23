@@ -10,6 +10,7 @@ import (
 	"github.com/CentaurWarchief/rasp3/gql"
 	"github.com/CentaurWarchief/rasp3/mp3"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -34,12 +35,27 @@ func main() {
 		go mp3.Discover(library, path)
 	}
 
+	var h http.Handler
+
 	r := mux.NewRouter().StrictSlash(true)
 
 	r.Methods("POST").Path("/query").HandlerFunc(gql.QueryHandler(library))
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.ListenPort), r); err != nil {
+	h = r
+	h = GetCors().Handler(h)
+
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.ListenPort), h); err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+}
+
+func GetCors() *cors.Cors {
+	return cors.New(cors.Options{
+		AllowCredentials: true,
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		ExposedHeaders:   []string{"Content-Type"},
+		MaxAge:           604800,
+	})
 }
