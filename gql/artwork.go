@@ -12,10 +12,10 @@ var Artwork = graphql.NewObject(graphql.ObjectConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 		"width": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.String),
+			Type: graphql.Int,
 		},
 		"height": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.String),
+			Type: graphql.Int,
 		},
 	},
 })
