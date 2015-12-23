@@ -2,6 +2,7 @@
   mp3(limit: 15) {
     id
     file
+    size
     id3 {
       title
       artist

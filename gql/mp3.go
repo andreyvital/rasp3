@@ -17,6 +17,9 @@ func Mp3(ar ArtworkReferenceResolver) *graphql.Object {
 			"file": &graphql.Field{
 				Type: graphql.NewNonNull(graphql.String),
 			},
+			"size": &graphql.Field{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
 			"id3": &graphql.Field{
 				Type: ID3,
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {

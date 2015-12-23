@@ -17,13 +17,15 @@ func Discover(l Library, root string) {
 
 		f, err := id3.Open(file)
 
+		size := f.Size()
+
 		if err != nil {
-			l.Add(NewWithoutId3(file))
+			l.Add(NewWithoutId3(file, size))
 			continue
 		}
 
 		if f.Title() == "" || f.Artist() == "" || f.Album() == "" {
-			l.Add(NewWithoutId3(file))
+			l.Add(NewWithoutId3(file, size))
 			continue
 		}
 
@@ -36,7 +38,7 @@ func Discover(l Library, root string) {
 		}
 
 		l.Add(
-			New(file, &ID3{
+			New(file, size, &ID3{
 				Title:  trim(f.Title()),
 				Artist: trim(f.Artist()),
 				Album:  trim(f.Album()),
