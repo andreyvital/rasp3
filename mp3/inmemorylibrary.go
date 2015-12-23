@@ -29,3 +29,13 @@ func (l *InMemoryLibrary) GetById(id string) *Mp3 {
 func (l *InMemoryLibrary) Search(query string) []*Mp3 {
 	return nil
 }
+
+func (l *InMemoryLibrary) All() []*Mp3 {
+	res := make([]*Mp3, 0, len(l.collection))
+
+	for _, mp3 := range l.collection {
+		res = append(res, mp3)
+	}
+
+	return res
+}
