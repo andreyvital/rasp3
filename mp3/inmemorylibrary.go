@@ -39,3 +39,7 @@ func (l *InMemoryLibrary) All() []*Mp3 {
 
 	return res
 }
+
+func (l *InMemoryLibrary) Count() int {
+	return len(l.collection)
+}

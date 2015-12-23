@@ -5,4 +5,5 @@ type Library interface {
 	All() []*Mp3
 	GetById(id string) *Mp3
 	Search(query string) []*Mp3
+	Count() int
 }
