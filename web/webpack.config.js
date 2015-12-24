@@ -3,6 +3,7 @@ let path = require('path')
 let webpack = require('webpack')
 let ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+
 /**
  * @returns {Boolean}
  */
@@ -86,11 +87,11 @@ module.exports = {
           path.resolve(__dirname, 'src')
         ],
       }, {
-        test: /\.(png|svg|jpe?g|woff)$/,
-        loader: 'url-loader?limit=10000'
-      }, {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      }, {
+        test: /\.(png|svg|jpe?g|otf|eot|ttf|woff2?)$/,
+        loader: 'url-loader?limit=10000'
       }
     ]
   }
