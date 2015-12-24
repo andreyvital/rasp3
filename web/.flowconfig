@@ -1,7 +1,8 @@
 [ignore]
 .*/node_modules/babel
 .*/node_modules/postcss
-.*/node_modules/webpack
+.*/node_modules/fbjs
+.*/node_modules/babylon
 
 [include]
 
@@ -9,3 +10,6 @@
 
 [options]
 module.name_mapper='^.*\.\(css\|svg\)$' -> '<PROJECT_ROOT>/src/empty'
+munge_underscores=true
+suppress_type=$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
